@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>КАУНАС-Town</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('');
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #0a0a0a;
+            color: #e0e0e0;
+            overflow-x: hidden;
+        }
+        
+        .minecraft-font {
+            font-family: 'Minecraft', sans-serif;
+        }
+        
+        .dirt-bg {
+            background-color: #7a5c34;
+            background-image: url('https://www.minecraft.net/content/dam/minecraft/touchup-2020/minecraft-background-creepers.jpg');
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: multiply;
+        }
+        
+        .grass-bg {
+            background-color: #4a7c59;
+            background-image: url('https://www.minecraft.net/content/dam/minecraft/touchup-2020/minecraft-background-creepers.jpg');
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: multiply;
+        }
+        
+        .stone-bg {
+            background-color: #7a7a7a;
+            background-image: url('https://www.minecraft.net/content/dam/minecraft/touchup-2020/minecraft-background-creepers.jpg');
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: multiply;
+        }
+        
+        .btn-minecraft {
+            background-color: #3b8520;
+            color: white;
+            border: 2px solid #2d6318;
+            border-radius: 0;
+            text-shadow: 1px 1px 0 #000;
+            box-shadow: 2px 2px 0 #000;
+            transition: all 0.1s;
+        }
+        
+        .btn-minecraft:hover {
+            background-color: #4a9a2a;
+            transform: translate(-1px, -1px);
+            box-shadow: 3px 3px 0 #000;
+        }
+        
+        .btn-minecraft:active {
+            transform: translate(1px, 1px);
+            box-shadow: 1px 1px 0 #000;
+        }
+        
+        .minecraft-card {
+            background-color: rgba(58, 58, 58, 0.8);
+            border: 3px solid #3b3b3b;
+            border-radius: 0;
+            box-shadow: 5px 5px 0 #000;
+        }
+        
+        .pixel-border {
+            border: 3px solid #3b3b3b;
+            border-radius: 0;
+            box-shadow: 5px 5px 0 #000;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+      #loadingScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 1s ease-out;
+        }
+        
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        
+        .logo-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 0;
+            background-color: #3b8520;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+            animation: pulse 2s infinite;
+            box-shadow: 5px 5px 0 #000;
+        }
+        
+        .logo-text {
+            font-size: 3rem;
+            font-weight: 900;
+            color: white;
+            text-align: center;
+            line-height: 1.2;
+            text-shadow: 3px 3px 0 #000;
+        }
+        
+        .logo-subtext {
+            font-size: 1.5rem;
+            color: #3b8520;
+            margin-top: 10px;
+            font-weight: 700;
+            text-shadow: 2px 2px 0 #000;
+        }
+        
+        .loading-bar {
+            width: 300px;
+            height: 20px;
+            background-color: #333;
+            border-radius: 0;
+            overflow: hidden;
+            margin-top: 30px;
+            border: 3px solid #3b3b3b;
+            box-shadow: 3px 3px 0 #000;
+        }
+        
+        .loading-progress {
+            height: 100%;
+            background-color: #3b8520;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 5px 5px 0 #000; }
+            50% { transform: scale(1.05); box-shadow: 8px 8px 0 #000; }
+            100% { transform: scale(1); box-shadow: 5px 5px 0 #000; }
+        }
+         
+         /* Общие стили */
+         body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            color: #333;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 1rem;
+        }
+
+        /* Современные стили */
+        nav {
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .logo {
+            display: flex;
+            align-items: center;
+            color: #333;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        nav .logo i {
+            margin-right: 10px;
+            color: #007bff;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 25px;
+        }
+
+        nav ul li a {
+            color: #555;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #007bff;
+        }
+
+        nav .mobile-menu-button {
+            background: none;
+            border: none;
+            color: #555;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                background-color: #fff;
+                width: 100%;
+                flex-direction: column;
+                align-items: center;
+                padding: 15px 0;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                z-index: 10;
+            }
+
+            nav ul.open {
+                display: flex;
+            }
+
+            nav ul li {
+                margin: 15px 0;
+            }
+
+            nav .mobile-menu-button {
+                display: block;
+            }
+        }
+
+        /* Герой секция */
+        #hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('https://i.imgur.com/JQlE5gP.png');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 120px 0;
+        }
+
+        #hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
+
+        #hero p {
+            font-size: 1.25rem;
+            margin-bottom: 40px;
+            opacity: 0.8;
+        }
+
+        /* Секция "О городе" */
+        #about {
+            padding: 90px 0;
+            background-color: #fff;
+        }
+
+        #about .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+        }
+
+        #about .info {
+            padding-right: 30px;
+        }
+
+        #about h2 {
+            font-size: 2.8rem;
+            margin-bottom: 30px;
+            color: #333;
+            font-weight: 700;
+        }
+
+        #about p {
+            font-size: 1.15rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        #about .feature {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        #about .feature i {
+            font-size: 2.2rem;
+            color: #28a745;
+            margin-right: 20px;
+        }
+
+        #about .feature h4 {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        /* Секция "Правила" */
+        #rules {
+            padding: 90px 0;
+            background-color: #f9f9f9;
+        }
+
+        #rules h2 {
+            font-size: 2.8rem;
+            margin-bottom: 40px;
+            color: #333;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        #rules .rules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        #rules .rule-card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+            border-left: 6px solid #ffc107;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        #rules .rule-card:hover {
+            transform: translateY(-5px);
+        }
+
+        #rules .rule-card h3 {
+            font-size: 1.6rem;
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        #rules .rule-card p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        #rules .rule-card .important {
+            color: #dc3545;
+            font-weight: 600;
+        }
+
+        /* Секция "Как подать заявку" */
+        #apply {
+            padding: 90px 0;
+            background-color: #fff;
+            text-align: center;
+        }
+
+        #apply h2 {
+            font-size: 2.8rem;
+            margin-bottom: 30px;
+            color: #333;
+            font-weight: 700;
+        }
+
+        #apply p {
+            font-size: 1.15rem;
+            color: #666;
+            margin-bottom: 50px;
+        }
+
+        #apply .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        #apply .step {
+            background-color: #f9f9f9;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        #apply .step:hover {
+            transform: translateY(-5px);
+        }
+
+        #apply .step i {
+            font-size: 3rem;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        #apply .step h3 {
+            font-size: 1.5rem;
+            color: #333;
+            margin-top: 20px;
+            font-weight: 600;
+        }
+
+        /* Секция "Присоединяйся" */
+        #cta {
+            background-color: #28a745;
+            color: white;
+            text-align: center;
+            padding: 100px 0;
+        }
+
+        #cta h2 {
+            font-size: 3rem;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        #cta p {
+            font-size: 1.25rem;
+            margin-bottom: 40px;
+            opacity: 0.8;
+        }
+
+        /* Модальные окна */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 10% auto;
+            padding: 30px;
+            border: 1px solid #888;
+            width: 80%;
+            border-radius: 12px;
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .close-button {
+            color: #aaa;
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: black;
+            text-decoration: none;
+        }
+
+        /* Форма регистрации в модальном окне */
+        #registrationForm label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        #registrationForm input[type=text],
+        #registrationForm input[type=number],
+        #registrationForm select,
+        #registrationForm input[type=checkbox] {
+            width: calc(100% - 24px);
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 1rem;
+        }
+
+        #registrationForm button[type=submit] {
+            width: 100%;
+            background-color: #007bff;
+            color: white;
+            padding: 14px 28px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        #registrationForm button[type=submit]:hover {
+            background-color: #0056b3;
+        }
+
+        /* Футер */
+        footer {
+            background-color: #343a40;
+            color: #ddd;
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        footer .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+
+        footer h4 {
+            color: white;
+            margin-bottom: 20px;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        footer ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        footer ul li a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        footer ul li a:hover {
+            color: white;
+        }
+
+        footer .social-links a {
+            color: #aaa;
+            font-size: 1.5rem;
+            margin: 0 15px;
+            transition: color 0.3s ease;
+        }
+
+        footer .social-links a:hover {
+            color: white;
+        }
+
+        footer .copyright {
+            margin-top: 40px;
+            font-size: 0.9rem;
+            color: #777;
+            grid-column: 1 / -1;
+        }
+
+        /* Скрытый контент изначально */
+        #mainContent.hidden {
+            display: none;
+        }
+
+        /* Утилиты для цвета */
+        .text-primary {
+            color: #007bff;
+        }
+
+        .text-success {
+            color: #28a745;
+        }
+    </style>
+<body class="dirt-bg">
+    <div id="loadingScreen">
+        <div class="logo-container">
+            <div class="logo-circle">
+                <i class="fas fa-cube text-white text-5xl"></i>
+            </div>
+            <div class="logo-text minecraft-font">КАУНАС-Town</div>
+            <div class="logo-subtext minecraft-font">Присоединяйся к нашему сообществу</div>
+        </div>
+        <div class="loading-bar">
+            <div class="loading-progress" id="loadingProgress"></div>
+        </div>
+    </div>
+
+    <div id="mainContent" class="hidden">
+        <nav class="border-b border-gray-800 py-4 stone-bg">
+            <div class="container mx-auto px-4 flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-green-600 flex items-center justify-center pixel-border">
+                        <i class="fas fa-cube text-white text-xl"></i>
+                    </div>
+                    <h1 class="text-2xl font-bold text-white minecraft-font">КАУНАС-<span class="text-green-500">Town</span></h1>
+                </div>
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#about" class="text-gray-300 hover:text-white font-medium minecraft-font">О городе</a>
+                    <a href="#rules" class="text-gray-300 hover:text-white font-medium minecraft-font">Правила</a>
+                    <a href="#apply" class="text-gray-300 hover:text-white font-medium minecraft-font">Как подать заявку</a>
+
+                    <button id="registerBtn" class="btn-minecraft px-6 py-2 font-bold transition duration-300 minecraft-font">
+                        ПОДАТЬ ЗАЯВКУ
+                    </button>
+                </div>
+                <button class="md:hidden text-white">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </nav>
+
+        <section class="py-20 px-4 grass-bg">
+            <div class="container mx-auto flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h2 class="text-4xl md:text-6xl font-bold text-white mb-6 minecraft-font">
+                        ПРИСОЕДИНЯЙТЕСЬ К НАШЕМУ <span class="text-green-500">КАУНАС-Town</span>
+                    </h2>
+                    <p class="text-xl text-gray-300 mb-8">
+                        Станьте жителем нашего процветающего Minecraft сообщества! Стройте, исследуйте и сотрудничайте с другими игроками в нашем удивительном городе.
+                    </p>
+                    <div class="flex space-x-4">
+                        <button id="heroRegisterBtn" class="btn-minecraft px-8 py-3 font-bold text-lg minecraft-font">
+                            ПОДАТЬ ЗАЯВКУ
+                        </button>
+                    </div>
+                </div>
+                <div >
+                   
+                        <img src="./photo_2025-05-12_22-20-06.jpg" alt="">
+                 
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="py-16 px-4 stone-bg">
+            <div class="container mx-auto">
+                <div class="flex flex-col md:flex-row items-center">
+                    <div class="md:w-1/2 mb-10 md:mb-0 md:pr-10">
+                        <h2 class="text-3xl md:text-4xl font-bold text-white mb-6 minecraft-font">НАШ <span class="text-green-500">ГОРОД</span></h2>
+                        <p class="text-gray-400 mb-6 text-lg">
+                            Наш Minecraft город - это процветающее сообщество с более чем 200 активными игроками. У нас есть все, что вам нужно:
+                        </p>
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div class="bg-green-600 p-2 mr-4 mt-1 pixel-border">
+                                    <i class="fas fa-home text-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-bold text-white mb-2 minecraft-font">Жилые районы</h4>
+                                    <p class="text-gray-400">
+                                        Красивые районы, где вы можете построить дом своей мечты.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="bg-green-600 p-2 mr-4 mt-1 pixel-border">
+                                    <i class="fas fa-store text-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-bold text-white mb-2 minecraft-font">Торговые зоны</h4>
+                                    <p class="text-gray-400">
+                                        Магазины, которыми управляют игроки, где вы можете покупать и продавать предметы.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="bg-green-600 p-2 mr-4 mt-1 pixel-border">
+                                    <i class="fas fa-landmark text-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-bold text-white mb-2 minecraft-font">Общественные здания</h4>
+                                    <p class="text-gray-400">
+                                        Библиотеки, арены, парки и другие общественные места.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2">
+                        <div class="minecraft-card overflow-hidden">
+                            <img src="./photo_2025-05-12_22-20-06.jpg" alt="Minecraft City" class="w-full h-auto">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="rules" class="py-16 px-4 grass-bg">
+            <div class="container mx-auto">
+                <h2 class="text-3xl md:text-4xl font-bold text-white text-center mb-12 minecraft-font">ПРАВИЛА <span class="text-green-500">ГОРОДА</span></h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="minecraft-card p-6">
+                        <div class="flex justify-between items-start mb-6">
+                            <h3 class="text-2xl font-bold text-white minecraft-font">БЕЗ ГРИФЕРСТВА</h3>
+                            <span class="bg-red-600 text-white text-xs font-bold px-3 py-1 minecraft-font">ВАЖНО</span>
+                        </div>
+                        <p class="text-gray-400 mb-6">
+                            Уничтожение или изменение построек других игроков без разрешения строго запрещено.
+                        </p>
+                        <div class="flex items-center">
+                            <i class="fas fa-ban text-red-500 mr-2"></i>
+                            <span class="text-gray-300">Постоянная блокировка за нарушения</span>
+                        </div>
+                    </div>
+
+                    <div class="minecraft-card p-6 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 bg-green-600 text-white text-xs font-bold px-3 py-1 transform rotate-45 translate-x-8 translate-y-6 w-48 text-center minecraft-font">
+                            САМОЕ ВАЖНОЕ
+                        </div>
+                        <div class="flex justify-between items-start mb-6">
+                            <h3 class="text-2xl font-bold text-white minecraft-font">БУДЬТЕ УВАЖИТЕЛЬНЫ</h3>
+                        </div>
+                        <p class="text-gray-400 mb-6">
+                            Относитесь ко всем игрокам с уважением. Никаких домогательств, разжигания ненависти или дискриминации любого рода.
+                        </p>
+                        <div class="flex items-center">
+                            <i class="fas fa-heart text-red-500 mr-2"></i>
+                            <span class="text-gray-300">Будьте добры друг к другу</span>
+                        </div>
+                    </div>
+
+                    <div class="minecraft-card p-6">
+                        <div class="flex justify-between items-start mb-6">
+                            <h3 class="text-2xl font-bold text-white minecraft-font">БЕЗ ЧИТЕРСТВА</h3>
+                            <span class="bg-blue-600 text-white text-xs font-bold px-3 py-1 minecraft-font">ЧЕСТНАЯ ИГРА</span>
+                        </div>
+                        <p class="text-gray-400 mb-6">
+                            Любая форма читерства, взлома или использования игровых ошибок запрещена.
+                        </p>
+                        <div class="flex items-center">
+                            <i class="fas fa-gavel text-yellow-500 mr-2"></i>
+                            <span class="text-gray-300">Строгое соблюдение</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="apply" class="py-16 px-4 stone-bg">
+            <div class="container mx-auto text-center">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-6 minecraft-font">КАК <span class="text-green-500">ПОДАТЬ ЗАЯВКУ</span></h2>
+                <p class="text-xl text-gray-400 mb-12 max-w-2xl mx-auto">
+                    Следуйте этим простым шагам, чтобы присоединиться к нашему Minecraft сообществу
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                    <div class="minecraft-card p-6">
+                        <div class="text-4xl text-green-500 mb-4 minecraft-font">1</div>
+                        <h3 class="text-xl font-bold text-white mb-4 minecraft-font">ЗАПОЛНИТЕ ФОРМУ</h3>
+                        <p class="text-gray-400">
+                            Заполните нашу простую форму заявки, указав свои данные.
+                        </p>
+                    </div>
+
+                    <div class="minecraft-card p-6">
+                        <div class="text-4xl text-green-500 mb-4 minecraft-font">2</div>
+                        <h3 class="text-xl font-bold text-white mb-4 minecraft-font">ДОЖДИТЕСЬ РАССМОТРЕНИЯ</h3>
+                        <p class="text-gray-400">
+                            Наша команда рассмотрит вашу заявку в течение 24 часов.
+                        </p>
+                    </div>
+
+                    <div class="minecraft-card p-6">
+                        <div class="text-4xl text-green-500 mb-4 minecraft-font">3</div>
+                        <h3 class="text-xl font-bold text-white mb-4 minecraft-font">ПРИСОЕДИНИТЕСЬ К ГОРОДУ</h3>
+                        <p class="text-gray-400">
+                            Получите доступ к вайтлисту и детали сервера, чтобы начать играть!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16 px-4 grass-bg">
+            <div class="container mx-auto text-center">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-6 minecraft-font">ГОТОВЫ ПРИСОЕДИНИТЬСЯ К НАШЕМУ <span class="text-green-500">ГОРОДУ</span>?</h2>
+                <p class="text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
+                    Станьте частью нашего растущего Minecraft сообщества сегодня!
+                </p>
+                <button id="bottomRegisterBtn" class="btn-minecraft text-white px-12 py-4 font-bold text-xl minecraft-font">
+                    ПОДАТЬ ЗАЯВКУ
+                </button>
+            </div>
+        </section>
+<div id="successModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+        <div class="minecraft-card p-8 max-w-md w-full mx-4 relative">
+            <button id="closeSuccessModal" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+                <i class="fas fa-times text-2xl"></i>
+            </button>
+            <h3 class="text-2xl font-bold text-white mb-2 minecraft-font">УСПЕХ!</h3>
+            <p class="text-gray-400 mb-6">Ваша заявка успешно отправлена!</p>
+        </div>
+    </div>  
+        <div id="registrationModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+            <div class="minecraft-card p-8 max-w-md w-full mx-4 relative">
+                <button id="closeModal" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+                <h3 class="text-2xl font-bold text-white mb-2 minecraft-font">ЗАЯВКА В ГОРОД</h3>
+                <p class="text-gray-400 mb-6">Заполните форму ниже, чтобы подать заявку</p>
+
+                <form id="registrationForm" class="space-y-4">
+                    <div>
+                        <label for="firstName" class="block text-gray-300 mb-2 minecraft-font">Никнейм в Minecraft</label>
+                        <input type="text" id="firstName" class="form-input-minecraft" required>
+                    </div>
+                    <div>
+                        <label for="age" class="block text-gray-300 mb-2 minecraft-font">Возраст</label>
+                        <input type="number" id="age" min="13" class="form-input-minecraft" required>
+                    </div>
+                    <div>
+                        <label for="telegram" class="block text-gray-300 mb-2 minecraft-font">Никнейм в Telegram</label>
+                        <input type="text" id="telegram" class="form-input-minecraft" placeholder="@никнейм" required>
+                    </div>
+                    <div>
+                        <label for="experience" class="block text-gray-300 mb-2 minecraft-font">Опыт игры в Minecraft</label>
+                        <select id="experience" class="form-input-minecraft" required>
+                            <option value="">Выберите ваш опыт</option>
+                            <option value="beginner">Новичок (только начал)</option>
+                            <option value="intermediate">Средний (играю некоторое время)</option>
+                            <option value="advanced">Продвинутый (опытный игрок)</option>
+                        </select>
+                    </div>
+                    <div class="flex items-start">
+                        <input type="checkbox" id="terms" class="checkbox-minecraft mt-1" required>
+                        <label for="terms" class="ml-2 text-gray-300 minecraft-font">Я согласен соблюдать все правила города</label>
+                    </div>
+                    <button type="submit" class="w-full btn-minecraft py-3 font-bold minecraft-font">
+                        ОТПРАВИТЬ ЗАЯВКУ
+                    </button>
+                </form>
+            </div>
+        </div>
+                    <div class="flex items-start">
+                        <input type="checkbox" id="terms" class="checkbox-minecraft mt-1" required>
+                        <label for="terms" class="ml-2 text-gray-300 minecraft-font">I agree to follow all city rules</label>
+                    </div>
+                    <button type="submit" class="w-full btn-minecraft py-3 font-bold minecraft-font">
+                        SUBMIT APPLICATION
+                    </button>
+                </form>
+            </div>
+        </div>
+
+       
+
+        <!-- Footer -->
+        <footer class="stone-bg py-12 px-4 border-t border-gray-800">
+            <div class="container mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div>
+                        <div class="flex items-center space-x-2 mb-4">
+                            <div class="w-10 h-10 bg-green-600 flex items-center justify-center pixel-border">
+                                <i class="fas fa-cube text-white text-xl"></i>
+                            </div>
+                            <h1 class="text-xl font-bold text-white minecraft-font">MINECRAFT <span class="text-green-500">CITY</span></h1>
+                        </div>
+                        <p class="text-gray-400">
+                            A thriving Minecraft community where creativity meets friendship.
+                        </p>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold text-lg mb-4 minecraft-font">QUICK LINKS</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#about" class="text-gray-400 hover:text-white minecraft-font">About City</a></li>
+                            <li><a href="#rules" class="text-gray-400 hover:text-white minecraft-font">Rules</a></li>
+                            <li><a href="#apply" class="text-gray-400 hover:text-white minecraft-font">How to Apply</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold text-lg mb-4 minecraft-font">CONTACT US</h4>
+                        <ul class="space-y-3">
+                            <li class="flex items-center">
+                                <i class="fab fa-telegram text-green-500 mr-3"></i>
+                                <span class="text-gray-400">@MinecraftCityAdmin</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-envelope text-green-500 mr-3"></i>
+                                <span class="text-gray-400">admin@minecraftcity.com</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-500 mb-4 md:mb-0 minecraft-font">
+                        © 2023 Minecraft City. All rights reserved.
+                    </p>
+                    <div class="flex space-x-6">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-discord"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+      <script>
+        // Loading Screen Animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const loadingScreen = document.getElementById('loadingScreen');
+            const loadingProgress = document.getElementById('loadingProgress');
+            const mainContent = document.getElementById('mainContent');
+            
+            // Simulate loading progress
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 10;
+                if (progress > 100) progress = 100;
+                loadingProgress.style.width = progress + '%';
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        loadingScreen.style.opacity = '0';
+                        setTimeout(() => {
+                            loadingScreen.style.display = 'none';
+                            mainContent.classList.remove('hidden');
+                            document.body.style.overflow = 'auto';
+                        }, 1000);
+                    }, 500);
+                }
+            }, 200);
+        });
+
+        // Telegram Bot Token and Chat ID (ЗАМЕНИТЕ НА СВОИ ДАННЫЕ)
+        const BOT_TOKEN = '7443148265:AAE6hNfHQwmJMQGSn8VGsR85L5SfjYi713c';
+        const CHAT_ID = '7443148265';
+        
+        // Modal functionality
+        const registerBtns = document.querySelectorAll('#registerBtn, #heroRegisterBtn, #bottomRegisterBtn');
+        const registrationModal = document.getElementById('registrationModal');
+        const closeModal = document.getElementById('closeModal');
+        const successModal = document.getElementById('successModal');
+        const closeSuccessModal = document.getElementById('closeSuccessModal');
+        const registrationForm = document.getElementById('registrationForm');
+        
+        // Проверка, что элементы существуют перед добавлением обработчиков
+        if (registerBtns && registrationModal && closeModal && successModal && closeSuccessModal && registrationForm) {
+            registerBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    registrationModal.classList.remove('hidden');
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+            
+            closeModal.addEventListener('click', () => {
+                registrationModal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            });
+            
+            closeSuccessModal.addEventListener('click', () => {
+                successModal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            });
+            
+            // Form submission
+            registrationForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const username = document.getElementById('firstName').value;
+                const age = document.getElementById('age').value;
+                const telegram = document.getElementById('telegram').value;
+                const experience = document.getElementById('experience').value;
+                
+                // Prepare message for Telegram
+                const message = `Новая заявка в Minecraft City:\n\n` +
+                               `Никнейм: ${username}\n` +
+                               `Возраст: ${age}\n` +
+                               `Telegram: ${telegram}\n` +
+                               `Опыт: ${experience}\n\n` +
+                               `Время: ${new Date().toLocaleString()}`;
+                
+                try {
+                    // Send data to Telegram
+                    const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            chat_id: CHAT_ID,
+                            text: message,
+                        }),
+                    });
+                    
+                    const data = await response.json();
+                    console.log('Telegram response:', data); // Для отладки
+                    
+                    if (data.ok) {
+                        // Show success modal
+                        registrationModal.classList.add('hidden');
+                        successModal.classList.remove('hidden');
+                        
+                        // Reset form
+                        registrationForm.reset();
+                    } else {
+                        alert('Ошибка при отправке заявки: ' + (data.description || 'Неизвестная ошибка'));
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Ошибка сети. Попробуйте позже.');
+                }
+            });
+        } else {
+            console.error('Не удалось найти необходимые элементы DOM');
+        }
+
+        // Закрытие модальных окон при клике вне их
+        window.addEventListener('click', (e) => {
+            if (e.target === registrationModal) {
+                registrationModal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }
+            if (e.target === successModal) {
+                successModal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }
+        });
+    </script>
+</body>
+</html>
